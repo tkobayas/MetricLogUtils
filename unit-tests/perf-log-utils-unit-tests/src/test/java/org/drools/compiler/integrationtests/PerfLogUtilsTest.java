@@ -236,4 +236,30 @@ public class PerfLogUtilsTest extends CommonTestMethodBase {
 
         runRules(kbase, personList);
     }
+
+    @Test
+    public void testEval() {
+
+        String str =
+                "import " + Address.class.getCanonicalName() + "\n" +
+                     "import " + Person.class.getCanonicalName() + "\n" +
+                     "rule R1\n" +
+                     "dialect \"mvel\"\n" +
+                     "when\n" +
+                     "  $p1 : Person()\n" +
+                     "  eval($p1.age > 90)" +
+                     "then\n" +
+//                                          "  System.out.println(\"$p1.name = \" + $p1.getName());\n" +
+                     "end\n";
+
+        KieBase kbase = loadKnowledgeBaseFromString(str);
+
+        dump(kbase);
+
+        List<Person> personList = IntStream.range(0, 100)
+                                           .mapToObj(i -> new Person("John" + i, i))
+                                           .collect(Collectors.toList());
+
+        runRules(kbase, personList);
+    }
 }
