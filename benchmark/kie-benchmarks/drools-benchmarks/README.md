@@ -7,6 +7,12 @@ quick test command:
 java -jar target/drools-benchmarks.jar -jvmArgs "-Xms4g -Xmx4g" -foe true -f 1 -wi 0 -i 1 org.drools.benchmarks.session.FireOnlyWithJoinsBenchmark
 ```
 
+or use run*.sh
+
+For the latest results, see https://github.com/tkobayas/PerfLogUtils/wiki/Does-performance-downgrade-if-I-enable-PerfLogUtils%3F
+
+Below is old results/investigation.
+
 7.38.0-SNAPSHOT (No PerfLogUtils)
 
 @Warmup(iterations = 1000)
