@@ -16,7 +16,7 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-core</artifactId>
-      <version>7.40.0-SNAPSHOT</version>
+    <!-- <version>7.40.0-SNAPSHOT-perf</version> -->
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
