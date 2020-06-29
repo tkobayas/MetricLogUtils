@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2005 JBoss Inc
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,26 +14,31 @@
  * limitations under the License.
  */
 
-package org.drools.compiler.integrationtests;
+package org.drools.modelcompiler;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.drools.compiler.Address;
-import org.drools.compiler.CommonTestMethodBase;
 import org.drools.compiler.Person;
 import org.drools.core.reteoo.ReteDumper;
-import org.drools.core.util.PerfLogUtils;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.kie.api.KieBase;
+import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
+import org.kie.internal.utils.KieHelper;
 
-public class PerfLogUtilsTest extends CommonTestMethodBase {
+import static org.junit.Assert.assertEquals;
+
+public class PerfModelCompilerTest extends BaseModelTest {
 
     private static final int LOOP = 1;
+
+    public PerfModelCompilerTest(RUN_TYPE testRunType) {
+        super(testRunType);
+    }
 
     @Before
     public void setup() {
@@ -42,26 +47,28 @@ public class PerfLogUtilsTest extends CommonTestMethodBase {
     }
 
     private void dump(KieBase kbase) {
-        System.out.println("===== ReteDumper");
-        ReteDumper dumper = new ReteDumper();
-        dumper.setNodeInfoOnly(true);
-        dumper.dump(kbase);
-        System.out.println("-----");
-        dumper.dumpAssociatedRules(kbase);
-        System.out.println();
+//        System.out.println("===== ReteDumper");
+//        ReteDumper dumper = new ReteDumper();
+//        dumper.setNodeInfoOnly(true);
+//        dumper.dump(kbase);
+//        System.out.println("-----");
+//        dumper.dumpAssociatedRules(kbase);
+//        System.out.println();
     }
 
-    private void runRules(KieBase kbase, List<Person> personList) {
+    private int runRules(KieBase kbase, List<Person> personList) {
+        int fired = -1;
         for (int i = 0; i < LOOP; i++) {
             KieSession ksession = kbase.newKieSession();
             personList.stream().forEach(ksession::insert);
 
             long start = System.nanoTime();
-            int fired = ksession.fireAllRules();
+            fired = ksession.fireAllRules();
             System.out.println("  fired = " + fired);
             System.out.println("  total elapsedMicro : " + (System.nanoTime() - start) / 1000);
             ksession.dispose();
         }
+        return fired;
     }
 
     @Test
@@ -83,7 +90,7 @@ public class PerfLogUtilsTest extends CommonTestMethodBase {
                      "then\n" +
                      "end\n";
 
-        KieBase kbase = loadKnowledgeBaseFromString(str);
+        KieBase kbase = getKieSession(str).getKieBase();
 
         dump(kbase);
 
@@ -91,8 +98,8 @@ public class PerfLogUtilsTest extends CommonTestMethodBase {
                                            .mapToObj(i -> new Person("John" + i, i))
                                            .collect(Collectors.toList());
 
-        runRules(kbase, personList);
-
+        int fired = runRules(kbase, personList);
+        assertEquals(9306, fired);
     }
 
     @Test
@@ -109,7 +116,7 @@ public class PerfLogUtilsTest extends CommonTestMethodBase {
                      "then\n" +
                      "end\n";
 
-        KieBase kbase = loadKnowledgeBaseFromString(str);
+        KieBase kbase = getKieSession(str).getKieBase();
 
         dump(kbase);
 
@@ -123,7 +130,7 @@ public class PerfLogUtilsTest extends CommonTestMethodBase {
                                            })
                                            .collect(Collectors.toList());
 
-        runRules(kbase, personList);
+        int fired = runRules(kbase, personList);
     }
 
     @Test
@@ -140,7 +147,7 @@ public class PerfLogUtilsTest extends CommonTestMethodBase {
                      "then\n" +
                      "end\n";
 
-        KieBase kbase = loadKnowledgeBaseFromString(str);
+        KieBase kbase = getKieSession(str).getKieBase();
 
         dump(kbase);
 
@@ -148,7 +155,8 @@ public class PerfLogUtilsTest extends CommonTestMethodBase {
                                            .mapToObj(i -> new Person("John" + i, i))
                                            .collect(Collectors.toList());
 
-        runRules(kbase, personList);
+        int fired = runRules(kbase, personList);
+        assertEquals(9900, fired);
     }
 
     @Test
@@ -165,7 +173,7 @@ public class PerfLogUtilsTest extends CommonTestMethodBase {
                      "then\n" +
                      "end\n";
 
-        KieBase kbase = loadKnowledgeBaseFromString(str);
+        KieBase kbase = getKieSession(str).getKieBase();
 
         dump(kbase);
 
@@ -173,7 +181,8 @@ public class PerfLogUtilsTest extends CommonTestMethodBase {
                                            .mapToObj(i -> new Person("John" + i, i))
                                            .collect(Collectors.toList());
 
-        runRules(kbase, personList);
+        int fired = runRules(kbase, personList);
+        assertEquals(9900, fired);
     }
 
     @Test
@@ -193,7 +202,7 @@ public class PerfLogUtilsTest extends CommonTestMethodBase {
                      //                     "  System.out.println(\"$p1.name = \" + $p1.getName() + \", other's $average = \" + $average);\n" +
                      "end\n";
 
-        KieBase kbase = loadKnowledgeBaseFromString(str);
+        KieBase kbase = getKieSession(str).getKieBase();
 
         dump(kbase);
 
@@ -201,7 +210,8 @@ public class PerfLogUtilsTest extends CommonTestMethodBase {
                                            .mapToObj(i -> new Person("John" + i, i))
                                            .collect(Collectors.toList());
 
-        runRules(kbase, personList);
+        int fired = runRules(kbase, personList);
+        assertEquals(50, fired);
     }
 
     @Test
@@ -220,7 +230,7 @@ public class PerfLogUtilsTest extends CommonTestMethodBase {
                      //                     "  System.out.println(\"$p1.name = \" + $p1.getName() + \", other's $average = \" + $average);\n" +
                      "end\n";
 
-        KieBase kbase = loadKnowledgeBaseFromString(str);
+        KieBase kbase = getKieSession(str).getKieBase();
 
         dump(kbase);
 
@@ -228,7 +238,8 @@ public class PerfLogUtilsTest extends CommonTestMethodBase {
                                            .mapToObj(i -> new Person("John" + i, i))
                                            .collect(Collectors.toList());
 
-        runRules(kbase, personList);
+        int fired = runRules(kbase, personList);
+        assertEquals(50, fired);
     }
 
     @Test
@@ -243,10 +254,10 @@ public class PerfLogUtilsTest extends CommonTestMethodBase {
                      "  $p1 : Person()\n" +
                      "  eval($p1.age > 90)" +
                      "then\n" +
-//                                          "  System.out.println(\"$p1.name = \" + $p1.getName());\n" +
+                     //                                          "  System.out.println(\"$p1.name = \" + $p1.getName());\n" +
                      "end\n";
 
-        KieBase kbase = loadKnowledgeBaseFromString(str);
+        KieBase kbase = getKieSession(str).getKieBase();
 
         dump(kbase);
 
@@ -254,6 +265,24 @@ public class PerfLogUtilsTest extends CommonTestMethodBase {
                                            .mapToObj(i -> new Person("John" + i, i))
                                            .collect(Collectors.toList());
 
-        runRules(kbase, personList);
+        int fired = runRules(kbase, personList);
+        assertEquals(9, fired);
+    }
+    
+    @Test
+    public void testComplexEval() throws Exception {
+        String drl =
+                "rule R1 when\n" +
+                     "    $s : String()\n" +
+                     "    Integer()\n" +
+                     "    not( ( eval($s.length() < 2) and (eval(true) or eval(false))))\n" +
+                     "then \n" +
+                     "end\n";
+
+        KieSession kieSession = getKieSession(drl);
+
+        kieSession.insert(42);
+        kieSession.insert("test");
+        assertEquals(1, kieSession.fireAllRules());
     }
 }

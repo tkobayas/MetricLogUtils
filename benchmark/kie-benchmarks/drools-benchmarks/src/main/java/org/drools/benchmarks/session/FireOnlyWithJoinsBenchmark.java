@@ -61,17 +61,13 @@ public class FireOnlyWithJoinsBenchmark extends AbstractBenchmark {
 
     @Setup
     public void setupKieBase() {
-        try {
-            Class<?> clazz = Class.forName("org.drools.core.util.PerfLogUtils");
-            System.out.println("#### " + clazz);
-            Method method = clazz.getDeclaredMethod("setEnabled", boolean.class);
-            method.invoke(null, perfLog);
-        } catch (ClassNotFoundException cnfe) {
-            // okay. This version doesn't have PerfLogUtils
-            System.out.println("cnfe : " + cnfe.toString());
-        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
+        System.out.println();
+        System.out.println("drools.performance.logger.enabled = " + System.getProperty("drools.performance.logger.enabled"));
+
+        System.setProperty("drools.performance.logger.enabled", String.valueOf(perfLog));
+        System.setProperty("drools.performance.logger.threshold", "-1");
+
+        System.out.println("drools.performance.logger.enabled = " + System.getProperty("drools.performance.logger.enabled"));
 
         final DRLProvider drlProvider = new RulesWithJoinsProvider(joinsNr, false, true);
 
