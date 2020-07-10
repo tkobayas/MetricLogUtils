@@ -16,9 +16,6 @@
 
 package org.drools.benchmarks.session;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import org.drools.benchmarks.common.AbstractBenchmark;
 import org.drools.benchmarks.common.DRLProvider;
 import org.drools.benchmarks.common.providers.RulesWithJoinsProvider;
@@ -57,17 +54,17 @@ public class FireOnlyWithJoinsBenchmark extends AbstractBenchmark {
     private int joinsNr;
 
     @Param({"true", "false"})
-    private boolean perfLog;
+    private boolean metric;
 
     @Setup
     public void setupKieBase() {
         System.out.println();
-        System.out.println("drools.performance.logger.enabled = " + System.getProperty("drools.performance.logger.enabled"));
+        System.out.println("drools.metric.logger.enabled = " + System.getProperty("drools.metric.logger.enabled"));
 
-        System.setProperty("drools.performance.logger.enabled", String.valueOf(perfLog));
-        System.setProperty("drools.performance.logger.threshold", "-1");
+        System.setProperty("drools.metric.logger.enabled", String.valueOf(metric));
+        System.setProperty("drools.metric.logger.threshold", "-1");
 
-        System.out.println("drools.performance.logger.enabled = " + System.getProperty("drools.performance.logger.enabled"));
+        System.out.println("drools.metric.logger.enabled = " + System.getProperty("drools.metric.logger.enabled"));
 
         final DRLProvider drlProvider = new RulesWithJoinsProvider(joinsNr, false, true);
 

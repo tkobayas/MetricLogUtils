@@ -20,8 +20,8 @@ public class JoinTest {
     @Test
     public void testJoin() {
 
-        System.setProperty("drools.performance.logger.enabled", "true");
-        System.setProperty("drools.performance.logger.threshold", "-1");
+        System.setProperty("drools.metric.logger.enabled", "true");
+        System.setProperty("drools.metric.logger.threshold", "-1");
 
         KieServices ks = KieServices.Factory.get();
         KieContainer kcontainer = ks.getKieClasspathContainer();

@@ -11,7 +11,7 @@
 
   <logger name="bitronix.tm" level="error"/>
   <logger name="org.hibernate" level="warn"/>
-  <logger name="org.drools.core.util.PerfLogUtils" level="trace"/>
+  <logger name="org.drools.metric.util.MetricLogUtils" level="trace"/>
 
   <root level="info">
     <appender-ref ref="consoleAppender" />
