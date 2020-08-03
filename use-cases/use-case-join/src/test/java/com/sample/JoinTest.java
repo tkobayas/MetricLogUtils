@@ -30,16 +30,18 @@ public class JoinTest {
         List<List<Order>> result = new ArrayList<>();
         ksession.setGlobal("result", result);
 
-        ReteDumper reteDumper = new ReteDumper();
-        reteDumper.setNodeInfoOnly(true);
-        reteDumper.dump(kbase);
-        System.out.println();
-        reteDumper.dumpAssociatedRules(kbase);
-        System.out.println();
+//        ReteDumper reteDumper = new ReteDumper();
+//        reteDumper.setNodeInfoOnly(true);
+//        reteDumper.dump(kbase);
+//        System.out.println();
+//        reteDumper.dumpAssociatedRules(kbase);
+//        System.out.println();
 
         // convenient static methods
-        // ReteDumper.dumpRete(kbase);
-        // ReteDumper.dumpAssociatedRulesRete(kbase);
+        ReteDumper.dumpRete(kbase);
+        System.out.println();
+        ReteDumper.dumpAssociatedRulesRete(kbase);
+        System.out.println();
 
         for (int i = 0; i < NUM_CUSTOMER; i++) {
             Customer cust = new Customer("Customer" + i);
