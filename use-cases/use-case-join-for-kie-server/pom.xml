@@ -51,28 +51,32 @@
       <groupId>org.kie</groupId>
       <artifactId>kie-api</artifactId>
       <version>${drools.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-core</artifactId>
       <version>${drools-core.version}</version>
+      <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>org.drools</groupId>
-      <artifactId>drools-metric</artifactId>
-      <version>${drools-core.version}</version>
-    </dependency>
+<!--     <dependency> -->
+<!--       <groupId>org.drools</groupId> -->
+<!--       <artifactId>drools-metric</artifactId> -->
+<!--       <version>${drools-core.version}</version> -->
+<!--       <scope>provided</scope> -->
+<!--     </dependency> -->
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-compiler</artifactId>
       <version>${drools-core.version}</version>
+      <scope>provided</scope>
     </dependency>
 
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <version>1.2.3</version>
-    </dependency>
+<!--     <dependency> -->
+<!--       <groupId>ch.qos.logback</groupId> -->
+<!--       <artifactId>logback-classic</artifactId> -->
+<!--       <version>1.2.3</version> -->
+<!--     </dependency> -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

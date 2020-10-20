@@ -1,0 +1,44 @@
+package com.sample
+
+import com.sample.Customer;
+import com.sample.Order;
+import java.util.ArrayList;
+
+global java.util.List result;
+
+rule "Collect expensive orders combination"
+  when
+    $c : Customer()
+    $o1 : Order(customer == $c)
+    $o2 : Order(customer == $c, id > $o1.id, price > $o1.price)
+    $maxPrice : Integer() from accumulate (Order(customer == $c, $price : price), max($price))
+    eval($o1.getPrice() > ($maxPrice - 50))
+  then
+    System.out.println("Collect : " + $o1 + ", "+ $o2);
+    ArrayList<Order> combination = new ArrayList<>();
+    combination.add($o1);
+    combination.add($o2);
+    result.add(combination);
+end
+
+rule "dummy1"
+  when
+    $o : Order()
+  then
+    System.out.println("dummy1 : " + $o);
+end
+
+rule "dummy2"
+  when
+    $c : Customer()
+  then
+    System.out.println("dummy2 : " + $c);
+end
+
+rule "dummy3"
+  when
+    $c : Customer()
+    $o1 : Order(customer == $c)
+  then
+    System.out.println("dummy3 : " + $o1);
+end
