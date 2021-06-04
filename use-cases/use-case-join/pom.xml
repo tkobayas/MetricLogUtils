@@ -13,8 +13,8 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
 
+    <!-- <drools.version>7.41.0.Final</drools.version> -->
     <drools.version>7.44.0.Final</drools.version>
-    <drools-core.version>7.44.0.Final</drools-core.version>
 
   </properties>
 
@@ -55,17 +55,17 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-core</artifactId>
-      <version>${drools-core.version}</version>
+      <version>${drools.version}</version>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-metric</artifactId>
-      <version>${drools-core.version}</version>
+      <version>${drools.version}</version>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-compiler</artifactId>
-      <version>${drools-core.version}</version>
+      <version>${drools.version}</version>
     </dependency>
 
     <dependency>

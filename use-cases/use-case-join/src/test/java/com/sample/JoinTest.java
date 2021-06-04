@@ -21,7 +21,7 @@ public class JoinTest {
     public void testJoin() {
 
         System.setProperty("drools.metric.logger.enabled", "true");
-        System.setProperty("drools.metric.logger.threshold", "-1");
+        System.setProperty("drools.metric.logger.threshold", "500"); // microseconds
 
         KieServices ks = KieServices.Factory.get();
         KieContainer kcontainer = ks.getKieClasspathContainer();
@@ -30,17 +30,15 @@ public class JoinTest {
         List<List<Order>> result = new ArrayList<>();
         ksession.setGlobal("result", result);
 
-//        ReteDumper reteDumper = new ReteDumper();
-//        reteDumper.setNodeInfoOnly(true);
-//        reteDumper.dump(kbase);
-//        System.out.println();
-//        reteDumper.dumpAssociatedRules(kbase);
-//        System.out.println();
-
         // convenient static methods
+        System.out.println("======= dumpRete output");
         ReteDumper.dumpRete(kbase);
+        System.out.println("=======");
         System.out.println();
+        System.out.println("======= dumpAssociatedRulesRete output");
         ReteDumper.dumpAssociatedRulesRete(kbase);
+        System.out.println("=======");
+
         System.out.println();
 
         for (int i = 0; i < NUM_CUSTOMER; i++) {
