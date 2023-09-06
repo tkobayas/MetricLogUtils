@@ -14,7 +14,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
 
     <!-- <drools.version>7.41.0.Final</drools.version> -->
-    <drools.version>7.44.0.Final</drools.version>
+    <drools.version>8.45.0-SNAPSHOT</drools.version>
 
   </properties>
 
@@ -54,6 +54,11 @@
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
+      <artifactId>drools-xml-support</artifactId>
+      <version>${drools.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
       <artifactId>drools-core</artifactId>
       <version>${drools.version}</version>
     </dependency>
@@ -67,6 +72,12 @@
       <artifactId>drools-compiler</artifactId>
       <version>${drools.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-mvel</artifactId>
+      <version>${drools.version}</version>
+    </dependency>
+
 
     <dependency>
       <groupId>ch.qos.logback</groupId>
